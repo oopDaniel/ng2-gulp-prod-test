@@ -36,7 +36,7 @@ gulp.task(tasks.CLIENT_BUILD_TS_DIST, () => {
                     .js
                     // .on('end', ()=>util.log('> Finished compilation of ts files!'))
                     .on('end', ()=>util.log('> Uglifying...'))
-                    .pipe(uglify())
+                    // .pipe(uglify())
                     // .on('end', ()=>util.log('> Finished uglification!'))
                     // .on('end', ()=>util.log('> Appending content hash...'))
                     // .pipe(rev())
