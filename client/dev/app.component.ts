@@ -1,4 +1,4 @@
-/// <reference path="../typings/index.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 import { Component } from '@angular/core';
 import { CComponent } from './c.component';

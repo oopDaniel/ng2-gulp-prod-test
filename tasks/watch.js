@@ -12,7 +12,7 @@ gulp.task(tasks.CLIENT_RELOAD, () => {
 });
 
 gulp.task(tasks.CLIENT_WATCH, [tasks.CLIENT_BUILD_TS_DEV, tasks.CLIENT_RELOAD], () => {
-  browserSync({proxy: "http://localhost:3333", reloadDelay: 1000});
+  browserSync({proxy: "http://localhost:7999", reloadDelay: 1000});
 
 
   gulp.watch(SCSS, [tasks.CLIENT_BUILD_SCSS_DEV, tasks.CLIENT_RELOAD]);

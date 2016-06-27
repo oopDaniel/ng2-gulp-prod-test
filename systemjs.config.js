@@ -11,7 +11,7 @@
 
   //map tells the System loader where to look for things
   var  map = {
-    'app':                        'app',
+    'app':                        'client/dev',
 
      '@angular':                   'node_modules/@angular',
     // 'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
@@ -71,6 +71,8 @@
     //     "exports": "ts"
     //   }
     // },
+    baseURL: '/',
+    defaultJSExtensions: true,
     map: map,
     packages: packages
   };
