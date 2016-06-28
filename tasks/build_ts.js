@@ -24,7 +24,10 @@ gulp.task(tasks.CLIENT_BUILD_TS_DIST, () => {
     {
       typescript: require('typescript'),
       removeComments: true,
-      outFile: 'app.js'
+      module: "system",
+      moduleResolution: "node",
+      outDir: "app"
+      // outFile: 'app.js'
     });
 
   console.log(`> Compiling the ts files (${path.DEV}**/*.ts)...`);

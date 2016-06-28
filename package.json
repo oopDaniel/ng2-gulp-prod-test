@@ -36,6 +36,7 @@
     "gulp-html-replace": "^1.6.1",
     "gulp-htmlmin": "^2.0.0",
     "gulp-imagemin": "^3.0.1",
+    "gulp-jspm-build": "0.0.15",
     "gulp-plumber": "^1.1.0",
     "gulp-rev-all": "^0.8.24",
     "gulp-sass": "^2.3.2",

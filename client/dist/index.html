@@ -10,16 +10,18 @@
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
     <script src="js/vendors.min.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script src="app.js"></script>
 <!--     <script src="lib/shim.min.js"></script>
     <script src="lib/zone.js"></script>
     <script src="lib/Reflect.js"></script>
     <script src="lib/system.src.js"></script> -->
 
     <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
-    <script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
+<!--     <script>
+      System.import('boot').catch(function(err){ console.error(err); });
+      // System.import('app.js').catch(function(err){ console.error(err); });
+    </script> -->
   </head>
 
   <!-- 3. Display the application -->

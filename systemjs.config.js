@@ -20,9 +20,23 @@
     // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
  };
 
+ // var map = {
+ //   'app':                                'client/dist',
+ //   'rxjs':                               'vendor/rxjs',
+ //   'zonejs':                             'vendor/zone.js',
+ //   'reflect-metadata':                   'vendor/reflect-metadata',
+ //   '@angular':                           'vendor/@angular'
+ // };
+
+ // var packages = {
+ //   'app':                                { main: 'boot', defaultExtension: 'js' },
+ //   'rxjs':                               { defaultExtension: 'js' },
+ //   'zonejs':                             { main: 'zone', defaultExtension: 'js' },
+ //   'reflect-metadata':                   { main: 'Reflect', defaultExtension: 'js' }
+ // };
   //packages tells the System loader how to load when no filename and/or no extension
   var packages = {
-    'app':                        { main: 'app.js',  defaultExtension: 'js' },
+    'app':                        { main: 'boot.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
     // 'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
   };
@@ -40,9 +54,9 @@
 
   // Add map entries for each angular package
   // only because we're pinning the version with `ngVer`.
-  ngPackageNames.forEach(function(pkgName) {
-    map['@angular/'+pkgName] = 'https://npmcdn.com/@angular/' + pkgName + ngVer;
-  });
+  // ngPackageNames.forEach(function(pkgName) {
+  //   map['@angular/'+pkgName] = 'https://npmcdn.com/@angular/' + pkgName + ngVer;
+  // });
 
   // Add package entries for angular packages
   ngPackageNames.forEach(function(pkgName) {
@@ -74,7 +88,12 @@
     baseURL: '/',
     defaultJSExtensions: true,
     map: map,
-    packages: packages
+    packages: packages,
+    // paths: {
+    //    "npm:*": "jspm_packages/npm/*",
+    //    "github:*": "jspm_packages/github/*",
+    //    "node_modules*": "node_modules/*"
+    //  }
   };
 
   System.config(config);
