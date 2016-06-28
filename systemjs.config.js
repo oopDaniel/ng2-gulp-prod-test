@@ -10,36 +10,40 @@
   var formsVer = '@0.1.1'; // lock forms version
 
   //map tells the System loader where to look for things
-  var  map = {
-    'app':                        'client/dist',
+ //  var  map = {
+ //    'app':                        'client/dist',
 
-     '@angular':                   'node_modules/@angular',
-    // 'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
-    'rxjs':                       'node_modules/rxjs',
-    // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
-    // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+ //     '@angular':                   'node_modules/@angular',
+ //    // 'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
+ //    'rxjs':                       'node_modules/rxjs',
+ //    // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
+ //    // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+ // };
+
+ var map = {
+   'app':                                'client/dist',
+   'rxjs':                               'vendor/rxjs',
+   'zonejs':                             'vendor/zone.js',
+   'reflect-metadata':                   'vendor/reflect-metadata',
+   '@angular':                           'vendor/@angular',
+   'core-js':                            'vendor/core-js/client',
+   'systemjs':                           'vendor/systemjs/dist',
  };
 
- // var map = {
- //   'app':                                'client/dist',
- //   'rxjs':                               'vendor/rxjs',
- //   'zonejs':                             'vendor/zone.js',
- //   'reflect-metadata':                   'vendor/reflect-metadata',
- //   '@angular':                           'vendor/@angular'
- // };
-
- // var packages = {
- //   'app':                                { main: 'boot', defaultExtension: 'js' },
- //   'rxjs':                               { defaultExtension: 'js' },
- //   'zonejs':                             { main: 'zone', defaultExtension: 'js' },
- //   'reflect-metadata':                   { main: 'Reflect', defaultExtension: 'js' }
- // };
+ var packages = {
+   'app':                                { main: 'boot', defaultExtension: 'js' },
+   'rxjs':                               { defaultExtension: 'js' },
+   'zonejs':                             { main: 'zone', defaultExtension: 'js' },
+   'reflect-metadata':                   { main: 'Reflect', defaultExtension: 'js' },
+   'core-js':                            { main: 'shim.min', defaultExtension: 'js' },
+   'systemjs':                           { main: 'system.src', defaultExtension: 'js' }
+ };
   //packages tells the System loader how to load when no filename and/or no extension
-  var packages = {
-    'app':                        { main: 'boot.js',  defaultExtension: 'js' },
-    'rxjs':                       { defaultExtension: 'js' },
-    // 'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-  };
+  // var packages = {
+  //   'app':                        { main: 'boot.js',  defaultExtension: 'js' },
+  //   'rxjs':                       { defaultExtension: 'js' },
+  //   // 'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+  // };
 
   var ngPackageNames = [
     'common',
@@ -78,7 +82,8 @@
     // DEMO ONLY! REAL CODE SHOULD NOT TRANSPILE IN THE BROWSER
     // transpiler: 'ts',
     // typescriptOptions: {
-    //   tsconfig: true
+    //   tsconfig: true,
+        // emitDecoratorMetadata: true
     // },
     // meta: {
     //   'typescript': {
