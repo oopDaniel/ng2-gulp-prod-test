@@ -7,7 +7,7 @@
 
   //map tells the System loader where to look for things
   var  map = {
-    'boot':                       'client/dev',
+    'app':                        'client/dev',
     '@angular':                   'node_modules/@angular',
     'rxjs':                       'node_modules/rxjs',
     // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
@@ -16,7 +16,7 @@
 
   //packages tells the System loader how to load when no filename and/or no extension
   var packages = {
-    'boot':                       { main: 'main',  defaultExtension: 'js' },
+    'app':                        { main: 'main',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
   };
 
@@ -34,7 +34,7 @@
 
   // Individual files (~300 requests):
   function packIndex(pkgName) {
-    packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
+    packages['@angular/'+pkgName] = { main: 'index', defaultExtension: 'js' };
   }
   // Bundled (~40 requests):
   function packUmd(pkgName) {
@@ -46,7 +46,7 @@
   ngPackageNames.forEach(setPackageConfig);
 
   // No umd for router yet
-  packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
+  packages['@angular/router'] = { main: 'index', defaultExtension: 'js' };
 
   // Forms not on rc yet
   // packages['@angular/forms'] = { main: 'index.js', defaultExtension: 'js' };

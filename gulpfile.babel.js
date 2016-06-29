@@ -1,18 +1,28 @@
-import gulp from 'gulp';
-import systemjsBuilder from 'systemjs-builder';
-import tsc from 'gulp-typescript';
+import gulp             from 'gulp';
+import tsc              from 'gulp-typescript';
+import concat           from 'gulp-concat';
+import uglify           from 'gulp-uglify';
+import util             from 'gulp-util';
+import sourcemaps       from 'gulp-sourcemaps';
 import exceptionHandler from 'gulp-plumber';
-import concat from 'gulp-concat';
-import uglify from 'gulp-uglify';
-import util from 'gulp-util';
-import sourcemaps from 'gulp-sourcemaps';
-// import embedTemplates from 'gulp-angular-embed-templates';
+import htmlreplace      from 'gulp-html-replace';
+import systemjsBuilder  from 'systemjs-builder';
+import del              from 'del';
+import runSequence      from 'run-sequence';
 
 const ROOT = './';
 const DEV  = './client/dev/';
 const DIST = './client/dist/';
 const NODE = './node_modules/';
+const SYSJSCONFIG = './systemjs.config.dist.js';
 
+
+
+//****************************************
+//        Clean the 'dist' folder
+//****************************************
+
+gulp.task('clean', () => del([`${DIST}**/*`]));
 
 
 
@@ -20,31 +30,31 @@ const NODE = './node_modules/';
 //          Compile ts files
 //****************************************
 
-gulp.task('build_ts:dev', () => {
-  let tsconfigSrc = tsc.createProject(ROOT + 'tsconfig.json');
+gulp.task('compile_ts:dev', () => {
+  let tsconfigSrc = tsc.createProject(`${ROOT}tsconfig.json`);
 
   return tsconfigSrc.src([`${DEV}**`, `!${DIST}**`])
                     .pipe(exceptionHandler())
                     .pipe(tsc(tsconfigSrc))
                     .js
-                    .pipe(gulp.dest(`${DEV}`));
+                    .pipe(gulp.dest(`${DIST}`));
 });
 
 
-gulp.task('build_ts:dist', () => {
+gulp.task('compile_ts:dist', () => {
   let TS_CONFIG   = `${ROOT}tsconfig.json`,
       tsconfigSrc = tsc.createProject(TS_CONFIG,
     {
-      // typescript:     require('typescript'),
       removeComments: true,
       // outFile:        'app.js',
-      outDir:         'appp',
+      outDir:         `${DIST}js`,
     });
 
   console.log(`> Compiling the ts files (${DEV}**/*.ts)...`);
 
-  return gulp.src([`${DEV}**/*.ts`, `!${DEV}boot.ts`])
-                    // .pipe(embedTemplates())
+  return gulp.src([`${DEV}**/*.ts`
+    // ,"typings/*.d.ts"
+    ])
                     .pipe(exceptionHandler())
                     .pipe(sourcemaps.init())
                     .pipe(tsc(tsconfigSrc))
@@ -52,9 +62,8 @@ gulp.task('build_ts:dist', () => {
                     // .js
                     // .on('end', ()=>util.log('> Uglifying...'))
                     // .pipe(uglify())
-                    .pipe(gulp.dest(DIST));
+                    .pipe(gulp.dest(`${DIST}js`));
 });
-
 
 
 
@@ -63,12 +72,23 @@ gulp.task('build_ts:dist', () => {
 //****************************************
 
 gulp.task('bundle:app', () => {
-  var builder = new systemjsBuilder('.', './systemjs.config.js');
-  return builder.buildStatic('app', `${DIST}booter.js`);
+  var builder = new systemjsBuilder(DIST, SYSJSCONFIG);
+  return builder.buildStatic(`boot`, `${DIST}booter.js`)
+    .then( () => del(`${DIST}js`));
 });
 
 
 
+//****************************************
+//           Minimization
+//****************************************
+
+gulp.task('minify:js', () => {
+  console.log(`> Uglifying 'booter.js'...`);
+  return gulp.src(`${DIST}booter.js`,{base: `./`})
+    .pipe(uglify())
+    .pipe(gulp.dest('./'));
+})
 
 //****************************************
 //         Bundle the vendors
@@ -78,13 +98,14 @@ gulp.task('bundle:vendor', () => {
     return gulp.src([
         `${NODE}zone.js/dist/zone.js`,
         `${NODE}reflect-metadata/Reflect.js`,
-        `${NODE}systemjs/dist/system-polyfills.js`,
+        // `${NODE}systemjs/dist/system-polyfills.js`,
         `${NODE}core-js/client/shim.min.js`,
-        `${NODE}systemjs/dist/system.js`,
+        // `${NODE}systemjs/dist/system.js`,
         `${NODE}systemjs/dist/system.src.js`,
         `system.config.js`,
       ])
         .pipe(concat('vendors.js'))
+        // .pipe(uglify())
         .pipe(gulp.dest(`${DIST}lib`));
 });
 
@@ -101,6 +122,20 @@ gulp.task('bundle:vendor.min', () => {
 });
 
 
+
+//****************************************
+//            HTML replace
+//****************************************
+
+gulp.task('html:replace', () => {
+  return gulp.src(`${DIST}index.html`)
+    .pipe(htmlreplace({
+        'vendor': 'lib/vendors.min.js',
+        'boot':   'booter.js',
+        'css':    'css/styles.css',
+    }))
+    .pipe(gulp.dest(`${DIST}`));
+});
 
 
 //****************************************
@@ -122,24 +157,73 @@ gulp.task('copy:vendor', () => {
     // .pipe(gulp.dest(`${DIST}lib`));
 });
 
+gulp.task('copy:css', () => {
+  return gulp.src(`${DEV}css/**/*`)
+      .pipe(gulp.dest(`${DIST}css`));
+});
+
+gulp.task('copy:html', () => {
+  return gulp.src(`${ROOT}index.html`,{base:'./'})
+      .pipe(gulp.dest(DIST));
+});
+
+gulp.task('copy:vendor.map', () => {
+  return gulp.src([
+      // `${NODE}es6-shim/es6-shim.map`,
+      `${NODE}core-js/client/shim.min.js.map`,
+      `${NODE}reflect-metadata/Reflect.js.map`,
+      // `${NODE}systemjs/dist/system-polyfills.js.map`
+    ]).pipe(gulp.dest(`${DIST}lib`));
+});
+
+gulp.task('copy', ['copy:vendor', 'copy:css', 'copy:html', 'copy:vendor.map']);
 
 
 
 //****************************************
-//            Bundle all
+//               Build up
 //****************************************
 
+gulp.task('app', (callback) => {
+  runSequence('compile_ts:dist', 'bundle:app', 'minify:js', callback);
+});
+gulp.task('bundle', ['bundle:vendor.min']);
+gulp.task('view', ['html:replace']);
+gulp.task('build', (callback) => {
+  runSequence('clean', 'copy', 'bundle', 'app', 'view', callback);
+});
 
-gulp.task('vendor', ['bundle:vendor', 'copy:vendor']);
-gulp.task('app',    ['build_ts:dist', 'bundle:app']);
+
+/*
+// ---------   Doesn't Work    ----------
 
 gulp.task('bundle', ['vendor', 'app'], () => {
     return gulp.src([
-        `${DIST}booter.js`,
+        `${DIST}js/booter.js`,
+        // `${DIST}app.js`,
         `${DIST}lib/vendors.js`
         // `${DIST}lib/vendors.min.js`
+        // `${DIST}lib/vendors.minn.js`
         ])
     .pipe(concat('app.bundle.js'))
     // .pipe(uglify())
     .pipe(gulp.dest(DIST));
 });
+*/
+
+/*
+// ---------   Doesn't Work    ----------
+
+gulp.task('cat', () => {
+  return gulp.src([
+      `${DIST}js/booter.js`,
+      // `${DIST}app.js`,
+      // `${DIST}lib/vendors.js`
+      // `${DIST}lib/vendors.min.js`
+      `${DIST}lib/vendors.minn.js`
+    ])
+    .pipe(concat('app.bundle.js'))
+    // .pipe(uglify())
+    .pipe(gulp.dest(DIST));
+})
+*/
