@@ -21,13 +21,13 @@ const NODE = './node_modules/';
 //****************************************
 
 gulp.task('build_ts:dev', () => {
-  let tsconfigSrc = tsc.createProject(ROOT + 'tsconfig.json');
+  let tsconfigSrc = tsc.createProject(ROOT + 'tsconfig.json', {outFile: 'app.dist.js'});
 
   return tsconfigSrc.src([`${DEV}**`, `!${DIST}**`])
                     .pipe(exceptionHandler())
                     .pipe(tsc(tsconfigSrc))
                     .js
-                    .pipe(gulp.dest(`${DEV}`));
+                    .pipe(gulp.dest(`${DIST}`));
 });
 
 
@@ -37,13 +37,13 @@ gulp.task('build_ts:dist', () => {
     {
       // typescript:     require('typescript'),
       removeComments: true,
-      // outFile:        'app.js',
-      outDir:         'appp',
+      outFile:        'app.js',
+      // outDir:         'appp',
     });
 
   console.log(`> Compiling the ts files (${DEV}**/*.ts)...`);
 
-  return gulp.src([`${DEV}**/*.ts`, `!${DEV}boot.ts`])
+  return gulp.src([`${DEV}**/*.ts`, `!${DEV}main.ts`])
                     // .pipe(embedTemplates())
                     .pipe(exceptionHandler())
                     .pipe(sourcemaps.init())
@@ -64,7 +64,7 @@ gulp.task('build_ts:dist', () => {
 
 gulp.task('bundle:app', () => {
   var builder = new systemjsBuilder('.', './systemjs.config.js');
-  return builder.buildStatic('app', `${DIST}booter.js`);
+  return builder.buildStatic(`${DIST}app`, `${DIST}booter.js`);
 });
 
 
@@ -75,14 +75,21 @@ gulp.task('bundle:app', () => {
 //****************************************
 
 gulp.task('bundle:vendor', () => {
+  gulp.src([
+      // `${NODE}es6-shim/es6-shim.map`,
+      `${NODE}core-js/client/shim.min.js.map`,
+      `${NODE}reflect-metadata/Reflect.js.map`,
+      // `${NODE}systemjs/dist/system-polyfills.js.map`
+    ]).pipe(gulp.dest(`${DIST}lib`));
+
     return gulp.src([
         `${NODE}zone.js/dist/zone.js`,
         `${NODE}reflect-metadata/Reflect.js`,
-        `${NODE}systemjs/dist/system-polyfills.js`,
+        // `${NODE}systemjs/dist/system-polyfills.js`,
         `${NODE}core-js/client/shim.min.js`,
-        `${NODE}systemjs/dist/system.js`,
+        // `${NODE}systemjs/dist/system.js`,
         `${NODE}systemjs/dist/system.src.js`,
-        `system.config.js`,
+        // `system.config.js`,
       ])
         .pipe(concat('vendors.js'))
         .pipe(gulp.dest(`${DIST}lib`));
@@ -136,8 +143,9 @@ gulp.task('app',    ['build_ts:dist', 'bundle:app']);
 gulp.task('bundle', ['vendor', 'app'], () => {
     return gulp.src([
         `${DIST}booter.js`,
-        `${DIST}lib/vendors.js`
-        // `${DIST}lib/vendors.min.js`
+        // `${DIST}app.js`,
+        // `${DIST}lib/vendors.js`
+        `${DIST}lib/vendors.min.js`
         ])
     .pipe(concat('app.bundle.js'))
     // .pipe(uglify())
