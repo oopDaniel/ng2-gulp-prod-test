@@ -1,3 +1,9 @@
 node_modules
 typings
 *.js
+*.js.map
+client/*.js
+client/*.js.map
+!gulpfile.babel.js
+!systemjs.config.dist.js
+!systemjs.config.js
