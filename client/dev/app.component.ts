@@ -1,7 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import { Component } from '@angular/core';
-import { CComponent } from './c.component';
+import { CComponent } from './subfolder/c.component';
 
 @Component({
   selector: 'my-app',

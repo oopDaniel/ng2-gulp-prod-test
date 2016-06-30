@@ -46,6 +46,7 @@ gulp.task('compile_ts:dist', () => {
       tsconfigSrc = tsc.createProject(TS_CONFIG,
     {
       removeComments: true,
+      // module:         'system',
       // outFile:        'app.js',
       outDir:         `${DIST}js`,
     });
