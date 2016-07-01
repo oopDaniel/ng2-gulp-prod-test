@@ -1,0 +1,11 @@
+.donut path {
+  opacity: 0.9; }
+
+.donut text {
+  font-family: monospace;
+  font-weight: lighter;
+  text-anchor: middle; }
+  .donut text.title {
+    fill: #2d343e; }
+  .donut text.total {
+    fill: #727f87; }

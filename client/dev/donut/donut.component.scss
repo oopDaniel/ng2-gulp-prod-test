@@ -1,0 +1,25 @@
+@import "../../_assets/styles/color.scss";
+
+.chart {
+    // margin-top:6em;
+    // width: 800px;
+    // height: 200px;
+}
+
+.donut {
+    path {
+        opacity: 0.9;
+    }
+
+    text {
+        font-family:monospace;
+        font-weight: lighter;
+        text-anchor: middle;
+        &.title {
+            fill: $d3-donut-center-text;
+        }
+        &.total {
+            fill: $d3-donut-bottom-text;
+        }
+    }
+}

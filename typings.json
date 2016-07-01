@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160602141332"
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "d3": "registry:dt/d3#0.0.0+20160628065019"
   }
 }

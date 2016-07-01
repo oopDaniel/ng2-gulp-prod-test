@@ -10,6 +10,7 @@
     'app':                        'client/dev',
     '@angular':                   'node_modules/@angular',
     'rxjs':                       'node_modules/rxjs',
+    'd3':                         'node_modules/d3',
     // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
     // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
  };
@@ -18,6 +19,7 @@
   var packages = {
     'app':                        { main: 'main',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
+    'd3':                         { main: 'd3.min', defaultExtension: 'js'},
   };
 
   var ngPackageNames = [

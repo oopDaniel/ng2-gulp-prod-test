@@ -1,11 +1,11 @@
 /// <reference path="../../typings/index.d.ts" />
-declare let __moduleName : string;
+// declare let __moduleName : string;
 
 import { Component, ViewChild } from '@angular/core';
 import { CComponent } from './subfolder/c.component';
 
 @Component({
-  moduleId: __moduleName,
+  // moduleId: __moduleName,
   selector: 'my-app',
   styles: [`
     input {
