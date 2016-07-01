@@ -10,6 +10,7 @@
     'boot':                       'js',
     '@angular':                   'lib/@angular',
     'rxjs':                       'lib/rxjs',
+    'd3':                         'lib/d3',
     // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
     // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
  };
@@ -18,6 +19,7 @@
   var packages = {
     'boot':                       { main: 'main',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
+    'd3':                         { main: 'd3.min', defaultExtension: 'js'},
   };
 
   var ngPackageNames = [

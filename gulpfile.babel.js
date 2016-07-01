@@ -148,6 +148,9 @@ gulp.task('copy:vendor', () => {
   gulp.src([`${NODE}rxjs/**/*`])
       .pipe(gulp.dest(`${DIST}lib/rxjs`));
 
+  gulp.src([`${NODE}d3/**/*`])
+          .pipe(gulp.dest(`${DIST}lib/d3`));
+
   return gulp.src([`${NODE}@angular/**/*`])
     .pipe(gulp.dest(`${DIST}lib/@angular`));
 
