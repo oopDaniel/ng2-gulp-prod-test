@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DonutGraph } from '../donut/donut.component';
+import { CService } from './c.service';
 import { HTML } from './c.component.html';
 // declare let __moduleName : string;
 
@@ -17,14 +18,19 @@ import { HTML } from './c.component.html';
   }
   `],
   template: HTML,
-  directives: [DonutGraph]
+  directives: [DonutGraph],
+  providers: [CService]
 })
 export class CComponent {
   @Input('parentMsg') pMsg: string;
   msg: string               = 'A message from child component!';
   isBtnClicked: boolean     = false;
-  private _msgCache: string = '';
   chartData: Array<number>  = [53245, 28479, 19697, 24037, 40245];
+  private _msgCache: string = '';
+
+  constructor(private _data: CService) {
+    this.chartData = _data.getData();
+  }
 
   changeMsg(msg: string) {
     if (this.isBtnClicked) {

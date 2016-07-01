@@ -3,6 +3,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { CComponent } from './subfolder/c.component';
+import { CMockDataService } from './subfolder/c.mockdata.service';
 
 @Component({
   // moduleId: __moduleName,
@@ -22,7 +23,8 @@ import { CComponent } from './subfolder/c.component';
     <button (click)="setMsgByViewChild()">Parent: {{cm.isBtnClicked?'Restore':'Set Msg by viewChild'}}</button>
     <c #myChild [parentMsg]="msg"></c>
   `,
-  directives: [CComponent]
+  directives: [CComponent],
+  providers: [CMockDataService]
 })
 export class AppComponent {
   @ViewChild('myChild') cm: CComponent;
