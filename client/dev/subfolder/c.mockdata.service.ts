@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CMockDataService {
@@ -6,11 +6,5 @@ export class CMockDataService {
 
     getData() {
         return this._data;
-    }
-
-    setData(data: Array<number>) {
-        if ( data.length > 1 && typeof data[0] === 'number' ) {
-            this._data = data;
-        }
     }
 }

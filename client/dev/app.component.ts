@@ -4,6 +4,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { CComponent } from './subfolder/c.component';
 import { CMockDataService } from './subfolder/c.mockdata.service';
+import { CQueryService } from './subfolder/c.query.service';
 
 @Component({
   // moduleId: __moduleName,
@@ -24,7 +25,7 @@ import { CMockDataService } from './subfolder/c.mockdata.service';
     <c #myChild [parentMsg]="msg"></c>
   `,
   directives: [CComponent],
-  providers: [CMockDataService]
+  providers: [CMockDataService, CQueryService]
 })
 export class AppComponent {
   @ViewChild('myChild') cm: CComponent;
