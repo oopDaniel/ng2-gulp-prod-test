@@ -1,7 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 // declare let __moduleName : string;
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Injector } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 import { CComponent } from './subfolder/c.component';
@@ -26,7 +26,7 @@ import { MockDataService, QueryService } from './services/services';
     <c #myChild [parentMsg]="msg"></c>
   `,
   directives: [CComponent],
-  providers: [MockDataService, QueryService, HTTP_PROVIDERS]
+  providers: [MockDataService, QueryService, HTTP_PROVIDERS, Injector]
 })
 export class AppComponent {
   @ViewChild('myChild') cm: CComponent;

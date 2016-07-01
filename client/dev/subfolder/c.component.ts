@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ReflectiveInjector, Injector } from '@angular/core';
 import { DonutGraph } from '../donut/donut.component';
 import { CService } from './c.service';
+import { QueryService } from './../services/services';
 import { HTML } from './c.component.html';
 // declare let __moduleName : string;
 
@@ -28,8 +29,17 @@ export class CComponent {
   chartData: Array<number>  = [53245, 28479, 19697, 24037, 40245];
   private _msgCache: string = '';
 
-  constructor(private _data: CService) {
-    _data.getData().subscribe( d => {
+
+  constructor(
+    // private _data: CService
+    private _i: Injector
+    ) {
+  let reflectiveInjector: ReflectiveInjector = <ReflectiveInjector>_i;
+  let injector = reflectiveInjector.resolveAndCreate([CService, QueryService]);
+  injector.get('CService').getData()
+
+// _data.getData()
+    .subscribe( d => {
       console.log('chart data:', d)
       this.chartData = d;
     });

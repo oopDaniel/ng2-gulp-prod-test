@@ -1,13 +1,26 @@
 import { bootstrap }    from '@angular/platform-browser-dynamic';
 // import { enableProdMode } from '@angular/core';
+import { provide, ReflectiveInjector } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { QueryService, MockDataService } from './services/services';
+import { CService } from './subfolder/c.service';
 // enableProdMode();
 bootstrap(AppComponent);
 
 
-/*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
+
+// let ServiceFactory = (q: QueryService, m: MockDataService) => {
+//   return new CService(q, m);
+// }
+
+// let FacDef = {
+//    useFactory: ServiceFactory,
+//    deps: [QueryService, MockDataService]
+// };
+// let MyServiceProvider = provide(FacDef, FacDef);
+// bootstrap(AppComponent, [MyServiceProvider, QueryService, MockDataService]);
+
+
+
+

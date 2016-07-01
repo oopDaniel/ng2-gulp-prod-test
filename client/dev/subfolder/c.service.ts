@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, Optional, Injector, ReflectiveInjector } from '@angular/core';
 import { MockDataService, QueryService } from './../services/services';
 
 @Injectable()
@@ -8,6 +8,8 @@ export class CService {
     constructor(
       private _mock: MockDataService
       // private _mock: QueryService
+         // @Optional(MockDataService) _mock,
+      // @Optional(QueryService) _mock
       ) {}
 
     getData(): Observable<any> {
