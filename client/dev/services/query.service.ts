@@ -4,17 +4,17 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-const URL = 'http://localhost:8000/client/dev/data/chart-data.json';
+const URL = 'http://localhost:3000/client/dev/data/chart-data.json';
 
 @Injectable()
-export class CQueryService {
+export class QueryService {
 
     constructor( @Inject(Http) private _http: Http) { }
 
     getData(): Observable<any> {
         return this._http
           .get(URL)
-          .map((r) => r.json())
+          .map((r) => r.json().data)
           .catch(this._errorHandle);
     }
 

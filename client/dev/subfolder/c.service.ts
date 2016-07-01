@@ -1,16 +1,16 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { CMockDataService } from './c.mockdata.service';
-import { CQueryService } from './c.query.service';
+import { MockDataService, QueryService } from './../services/services';
 
 @Injectable()
 export class CService {
     private _data: Array<number>;
 
     constructor(
-      private _mock: CMockDataService
+      private _mock: MockDataService
+      // private _mock: QueryService
       ) {}
 
-    getData(): Array<number> {
+    getData(): Observable<any> {
         return this._mock.getData();
     }
 

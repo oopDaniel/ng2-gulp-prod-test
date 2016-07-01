@@ -29,7 +29,10 @@ export class CComponent {
   private _msgCache: string = '';
 
   constructor(private _data: CService) {
-    this.chartData = _data.getData();
+    _data.getData().subscribe( d => {
+      console.log('chart data:', d)
+      this.chartData = d;
+    });
   }
 
   changeMsg(msg: string) {

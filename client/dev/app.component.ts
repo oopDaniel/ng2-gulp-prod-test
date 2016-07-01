@@ -2,9 +2,10 @@
 // declare let __moduleName : string;
 
 import { Component, ViewChild } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+
 import { CComponent } from './subfolder/c.component';
-import { CMockDataService } from './subfolder/c.mockdata.service';
-import { CQueryService } from './subfolder/c.query.service';
+import { MockDataService, QueryService } from './services/services';
 
 @Component({
   // moduleId: __moduleName,
@@ -25,7 +26,7 @@ import { CQueryService } from './subfolder/c.query.service';
     <c #myChild [parentMsg]="msg"></c>
   `,
   directives: [CComponent],
-  providers: [CMockDataService, CQueryService]
+  providers: [MockDataService, QueryService, HTTP_PROVIDERS]
 })
 export class AppComponent {
   @ViewChild('myChild') cm: CComponent;
