@@ -1,7 +1,8 @@
-import { Component, Input, ReflectiveInjector, Injector } from '@angular/core';
+import { Component, Input, ReflectiveInjector, Attribute } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { DonutGraph } from '../donut/donut.component';
 import { CService } from './c.service';
-import { QueryService } from './../services/services';
+import { QueryService, MockDataService } from './../services/services';
 import { HTML } from './c.component.html';
 // declare let __moduleName : string;
 
@@ -15,7 +16,7 @@ import { HTML } from './c.component.html';
     box-sizing: border-box;
     margin: 20px 10px;
     padding: 0 20px 20px;
-    width: 720px;
+    width: 80%;
   }
   `],
   template: HTML,
@@ -31,18 +32,27 @@ export class CComponent {
 
 
   constructor(
+    @Attribute('serviceTarget') serviceTarget: string
     // private _data: CService
-    private _i: Injector
     ) {
-  let reflectiveInjector: ReflectiveInjector = <ReflectiveInjector>_i;
-  let injector = reflectiveInjector.resolveAndCreate([CService, QueryService]);
-  injector.get('CService').getData()
+    let injector = ReflectiveInjector.resolveAndCreate([
+      { provide: "cService", useClass: QueryService,    multi: true },
+      { provide: "cService", useClass: MockDataService, multi: true },
+      HTTP_PROVIDERS
+    ]);
 
-// _data.getData()
+    let _index = serviceTarget === 'mock' ? 0 : 1;
+    let data = injector.get('cService')[_index];
+    data.getData()
     .subscribe( d => {
-      console.log('chart data:', d)
       this.chartData = d;
     });
+
+// _data.getData()
+//     .subscribe( d => {
+//       console.log('chart data:', d)
+//       this.chartData = d;
+//     });
   }
 
   changeMsg(msg: string) {

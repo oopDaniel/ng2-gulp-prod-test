@@ -23,10 +23,13 @@ import { MockDataService, QueryService } from './services/services';
     <input [(ngModel)]="cm.msg">
     <button (click)="passMsgByAttr(btnAttr)" #btnAttr>Parent: Pass Msg by attribute</button>
     <button (click)="setMsgByViewChild()">Parent: {{cm.isBtnClicked?'Restore':'Set Msg by viewChild'}}</button>
-    <c #myChild [parentMsg]="msg"></c>
+    <div style="width:1440px;height:600px;">
+      <c #myChild [parentMsg]="msg" serviceTarget="mock" style="float:left"></c>
+      <c [parentMsg]="msg" serviceTarget="query" style="float:right"></c>
+    </div>
   `,
   directives: [CComponent],
-  providers: [MockDataService, QueryService, HTTP_PROVIDERS, Injector]
+  providers: [MockDataService, QueryService, HTTP_PROVIDERS]
 })
 export class AppComponent {
   @ViewChild('myChild') cm: CComponent;

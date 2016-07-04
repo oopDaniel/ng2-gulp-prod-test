@@ -1,5 +1,6 @@
 import { Injectable, Optional, Injector, ReflectiveInjector } from '@angular/core';
 import { MockDataService, QueryService } from './../services/services';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CService {
