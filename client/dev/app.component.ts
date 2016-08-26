@@ -2,10 +2,12 @@
 
 import { Component } from '@angular/core';
 import { CComponent } from './c.component';
+// let CComponent = require('./c.component');
 
 @Component({
   selector: 'my-app',
-  template: '<h1>My First Angular 2 App</h1><c></c>',
+  template: '<h1><div class="cc">My First Angular 2 App</div></h1><c></c>',
+  styles: [require('./test.scss')],
   directives: [CComponent]
 })
 export class AppComponent { }

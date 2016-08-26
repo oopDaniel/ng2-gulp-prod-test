@@ -5,6 +5,6 @@ import {ViewEncapsulation} from '@angular/core';
   selector: 'c',
   template: '<div class="test-style"><h2>Hello World</h2></div>',
   styles: [require('./c.component.scss')],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class CComponent { }
