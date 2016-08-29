@@ -1,6 +1,5 @@
 node_modules
 typings
-*.js
 *.js.map
 client/*.js
 client/*.js.map
