@@ -11,8 +11,8 @@
     '@angular':                   'node_modules/@angular',
     'rxjs':                       'node_modules/rxjs',
     'd3':                         'node_modules/d3',
-    // 'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
-    // 'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+    // 'ts':                         'https://unpkg.com/plugin-typescript@4.0.10/lib/plugin.js',
+    // 'typescript':                 'https://unpkg.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
  };
 
   //packages tells the System loader how to load when no filename and/or no extension
